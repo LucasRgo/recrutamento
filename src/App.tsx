@@ -1,15 +1,18 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
+import { Navbar } from "./components/Navbar";
+import { Hero } from "./components/Hero";
+import { Footer } from "./components/Footer";
 
 function App() {
-    const [count, setCount] = useState(0);
-
     return (
-        <>
-            <h1>Hello World</h1>
-        </>
+        <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <main className="flex-grow">
+                <Hero />
+                {/* Additional sections will go here */}
+            </main>
+            <Footer />
+        </div>
     );
 }
 
