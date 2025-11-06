@@ -7,7 +7,7 @@ export function Footer() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     return (
-        <footer className="relative bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 border-t border-pink-500/20">
+        <footer className="relative bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 border-t border-pink-500/20 rounded-t-3xl">
             {/* Decorative gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-pink-500/5 via-transparent to-transparent pointer-events-none" />
 

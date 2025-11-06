@@ -1,11 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { ArrowRight, TrendingUp } from "lucide-react";
 
 export function Hero() {
-    const scrollToForm = () => {
-        // Smooth scroll to form section when implemented
-        window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+    const navigate = useNavigate();
+
+    const startForm = () => {
+        navigate("/form");
     };
 
     return (
@@ -58,7 +60,7 @@ export function Hero() {
                                 style={{ backgroundColor: "#2563EB" }}
                                 onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#1D4ED8")}
                                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#2563EB")}
-                                onClick={scrollToForm}>
+                                onClick={startForm}>
                                 Começar Agora
                                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                             </Button>
