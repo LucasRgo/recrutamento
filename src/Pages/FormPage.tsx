@@ -7,7 +7,6 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group";
 import { Checkbox } from "../components/ui/checkbox";
-import { Progress } from "../components/ui/progress";
 import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 import { useFormFlow } from "../hooks/useFormFlow";
 import { questionnaire } from "../Data/Questions";
@@ -162,20 +161,32 @@ export function FormPage() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-amber-50">
+        <div className="min-h-screen flex flex-col bg-gradient-to-br from-pink-300 via-gray-200 to-blue-300">
             {/* Header with Progress */}
             <motion.div
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                className="w-full bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-10">
-                <div className="max-w-3xl mx-auto px-4 py-4">
+                className="w-full bg-white/90 backdrop-blur-md border-b border-pink-100 sticky top-16 z-10 shadow-sm">
+                <div className="max-w-3xl mx-auto px-4 py-5">
                     <div className="flex items-center justify-between mb-3">
-                        <span className="text-sm font-medium text-gray-600">
+                        <span className="text-sm font-semibold text-gray-700">
                             Pergunta {currentIndex + 1} de {totalQuestions}
                         </span>
-                        <span className="text-sm font-medium text-blue-600">{Math.round(progress)}% completo</span>
+                        <span className="text-sm font-bold bg-gradient-to-r from-pink-600 to-pink-700 bg-clip-text text-transparent">
+                            {Math.round(progress)}% completo
+                        </span>
                     </div>
-                    <Progress value={progress} className="h-2" />
+                    <div className="relative h-3 bg-gray-100 rounded-full overflow-hidden">
+                        <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${progress}%` }}
+                            transition={{ duration: 0.5, ease: "easeOut" }}
+                            className="absolute h-full bg-gradient-to-r from-pink-500 via-pink-600 to-rose-600 rounded-full shadow-lg"
+                            style={{
+                                boxShadow: "0 0 10px rgba(236, 72, 153, 0.5)",
+                            }}
+                        />
+                    </div>
                 </div>
             </motion.div>
 
@@ -232,7 +243,7 @@ export function FormPage() {
                                                             {currentQuestion.options.map((option) => (
                                                                 <div
                                                                     key={option.value}
-                                                                    className="flex items-center space-x-3 p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 transition-colors cursor-pointer"
+                                                                    className="flex items-center space-x-3 p-4 rounded-lg border-2 border-gray-200 hover:border-pink-300 hover:bg-pink-50/50 transition-all cursor-pointer"
                                                                     onClick={() => handleChoiceChange(option.value)}>
                                                                     <Checkbox
                                                                         id={option.value}
@@ -257,7 +268,7 @@ export function FormPage() {
                                                             {currentQuestion.options.map((option) => (
                                                                 <div
                                                                     key={option.value}
-                                                                    className="flex items-center space-x-3 p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 transition-colors cursor-pointer"
+                                                                    className="flex items-center space-x-3 p-4 rounded-lg border-2 border-gray-200 hover:border-pink-300 hover:bg-pink-50/50 transition-all cursor-pointer"
                                                                     onClick={() => handleChoiceChange(option.value)}>
                                                                     <RadioGroupItem
                                                                         value={option.value}
@@ -293,7 +304,7 @@ export function FormPage() {
                                                     <Button
                                                         type="submit"
                                                         size="lg"
-                                                        className="flex-grow bg-blue-600 hover:bg-blue-700"
+                                                        className="flex-grow bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 shadow-lg hover:shadow-xl transition-all"
                                                         disabled={
                                                             currentQuestion.type === "text"
                                                                 ? !inputValue.trim()
@@ -349,8 +360,9 @@ export function FormPage() {
 
             {/* Decorative elements */}
             <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl"></div>
-                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-100/20 rounded-full blur-3xl"></div>
+                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-pink-200/30 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl"></div>
+                <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-rose-200/20 rounded-full blur-3xl"></div>
             </div>
         </div>
     );
