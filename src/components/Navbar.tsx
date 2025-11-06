@@ -7,9 +7,11 @@ export function Navbar() {
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
                     <div className="flex-shrink-0">
-                        <h1 className="text-2xl font-bold" style={{ color: "#EC4899" }}>
-                            RecruitPro
-                        </h1>
+                        <img 
+                            src="/favicon_io/logo.png" 
+                            alt="DS INTERMEDIÁRIOS DE CRÉDITO" 
+                            className="h-12 w-auto"
+                        />
                     </div>
                     {/* CTA Button */}
                     <div className="flex items-center">
