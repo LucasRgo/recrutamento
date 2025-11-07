@@ -167,16 +167,16 @@ export function FormPage() {
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 className="w-full bg-white/90 backdrop-blur-md border-b border-pink-100 sticky top-16 z-10 shadow-sm">
-                <div className="max-w-3xl mx-auto px-4 py-5">
-                    <div className="flex items-center justify-between mb-3">
-                        <span className="text-sm font-semibold text-gray-700">
+                <div className="max-w-3xl mx-auto px-3 sm:px-4 py-3 sm:py-5">
+                    <div className="flex items-center justify-between mb-2 sm:mb-3">
+                        <span className="text-xs sm:text-sm font-semibold text-gray-700">
                             Pergunta {currentIndex + 1} de {totalQuestions}
                         </span>
-                        <span className="text-sm font-bold bg-gradient-to-r from-pink-600 to-pink-700 bg-clip-text text-transparent">
+                        <span className="text-xs sm:text-sm font-bold bg-gradient-to-r from-pink-600 to-pink-700 bg-clip-text text-transparent">
                             {Math.round(progress)}% completo
                         </span>
                     </div>
-                    <div className="relative h-3 bg-gray-100 rounded-full overflow-hidden">
+                    <div className="relative h-2 sm:h-3 bg-gray-100 rounded-full overflow-hidden">
                         <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: `${progress}%` }}
@@ -191,7 +191,7 @@ export function FormPage() {
             </motion.div>
 
             {/* Main Content */}
-            <div className="flex-grow flex items-center justify-center px-4 py-8">
+            <div className="flex-grow flex items-start justify-center px-3 pt-20 pb-4">
                 <div className="w-full max-w-2xl">
                     <AnimatePresence mode="wait" custom={direction}>
                         <motion.div
@@ -206,23 +206,25 @@ export function FormPage() {
                                 opacity: { duration: 0.2 },
                             }}>
                             <Card className="shadow-xl border-2 border-gray-100">
-                                <CardHeader className="space-y-3">
-                                    <CardTitle className="text-2xl sm:text-3xl font-bold text-gray-900">
+                                <CardHeader className="space-y-2 sm:space-y-3 pb-3 sm:pb-6">
+                                    <CardTitle className="text-lg sm:text-2xl md:text-3xl font-bold text-gray-900 leading-tight">
                                         {currentQuestion.title}
                                     </CardTitle>
                                     {currentQuestion.helperText && (
-                                        <CardDescription className="text-base text-gray-600">
+                                        <CardDescription className="text-sm sm:text-base text-gray-600">
                                             {currentQuestion.helperText}
                                         </CardDescription>
                                     )}
                                 </CardHeader>
 
-                                <CardContent className="space-y-6">
+                                <CardContent className="space-y-4 sm:space-y-6">
                                     {!isSuccessQuestion && (
-                                        <form onSubmit={handleSubmit} className="space-y-6">
+                                        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                                             {currentQuestion.type === "text" ? (
-                                                <div className="space-y-3">
-                                                    <Label htmlFor="answer" className="text-base font-medium">
+                                                <div className="space-y-2 sm:space-y-3">
+                                                    <Label
+                                                        htmlFor="answer"
+                                                        className="text-sm sm:text-base font-medium">
                                                         A tua resposta
                                                     </Label>
                                                     <Input
@@ -231,30 +233,36 @@ export function FormPage() {
                                                         value={inputValue}
                                                         onChange={(e) => setInputValue(e.target.value)}
                                                         onKeyPress={handleKeyPress}
-                                                        placeholder={currentQuestion.placeholder || "Escreve aqui..."}
-                                                        className="text-lg py-6"
+                                                        placeholder={
+                                                            currentQuestion.placeholder || "Escreve aqui..."
+                                                        }
+                                                        className="text-base sm:text-lg py-4 sm:py-6"
                                                         required={currentQuestion.validation?.required}
                                                     />
                                                 </div>
                                             ) : (
-                                                <div className="space-y-4">
+                                                <div className="space-y-2 sm:space-y-4 max-h-[50vh] sm:max-h-none overflow-y-auto pr-1">
                                                     {currentQuestion.allowMultiple ? (
-                                                        <div className="space-y-3">
+                                                        <div className="space-y-2 sm:space-y-3">
                                                             {currentQuestion.options.map((option) => (
                                                                 <div
                                                                     key={option.value}
-                                                                    className="flex items-center space-x-3 p-4 rounded-lg border-2 border-gray-200 hover:border-pink-300 hover:bg-pink-50/50 transition-all cursor-pointer"
-                                                                    onClick={() => handleChoiceChange(option.value)}>
+                                                                    className="flex items-center space-x-2 sm:space-x-3 p-3 sm:p-4 rounded-lg border-2 border-gray-200 hover:border-pink-300 hover:bg-pink-50/50 transition-all cursor-pointer"
+                                                                    onClick={() =>
+                                                                        handleChoiceChange(option.value)
+                                                                    }>
                                                                     <Checkbox
                                                                         id={option.value}
-                                                                        checked={selectedChoices.includes(option.value)}
+                                                                        checked={selectedChoices.includes(
+                                                                            option.value
+                                                                        )}
                                                                         onCheckedChange={() =>
                                                                             handleChoiceChange(option.value)
                                                                         }
                                                                     />
                                                                     <Label
                                                                         htmlFor={option.value}
-                                                                        className="text-base font-medium cursor-pointer flex-grow">
+                                                                        className="text-sm sm:text-base font-medium cursor-pointer flex-grow leading-snug">
                                                                         {option.label}
                                                                     </Label>
                                                                 </div>
@@ -264,19 +272,21 @@ export function FormPage() {
                                                         <RadioGroup
                                                             value={selectedChoices[0] || ""}
                                                             onValueChange={handleChoiceChange}
-                                                            className="space-y-3">
+                                                            className="space-y-2 sm:space-y-3">
                                                             {currentQuestion.options.map((option) => (
                                                                 <div
                                                                     key={option.value}
-                                                                    className="flex items-center space-x-3 p-4 rounded-lg border-2 border-gray-200 hover:border-pink-300 hover:bg-pink-50/50 transition-all cursor-pointer"
-                                                                    onClick={() => handleChoiceChange(option.value)}>
+                                                                    className="flex items-center space-x-2 sm:space-x-3 p-3 sm:p-4 rounded-lg border-2 border-gray-200 hover:border-pink-300 hover:bg-pink-50/50 transition-all cursor-pointer"
+                                                                    onClick={() =>
+                                                                        handleChoiceChange(option.value)
+                                                                    }>
                                                                     <RadioGroupItem
                                                                         value={option.value}
                                                                         id={option.value}
                                                                     />
                                                                     <Label
                                                                         htmlFor={option.value}
-                                                                        className="text-base font-medium cursor-pointer flex-grow">
+                                                                        className="text-sm sm:text-base font-medium cursor-pointer flex-grow leading-snug">
                                                                         {option.label}
                                                                     </Label>
                                                                 </div>
@@ -287,16 +297,16 @@ export function FormPage() {
                                             )}
 
                                             {/* Action Buttons */}
-                                            <div className="flex gap-3 pt-4">
+                                            <div className="flex gap-2 sm:gap-3 pt-2 sm:pt-4">
                                                 <Button
                                                     type="button"
                                                     variant="outline"
                                                     size="lg"
                                                     onClick={handleBack}
                                                     disabled={questionHistory.length === 0}
-                                                    className="flex-shrink-0">
-                                                    <ArrowLeft className="mr-2 h-5 w-5" />
-                                                    Voltar
+                                                    className="flex-shrink-0 h-10 sm:h-11 px-3 sm:px-4">
+                                                    <ArrowLeft className="mr-1 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                                                    <span className="text-sm sm:text-base">Voltar</span>
                                                 </Button>
 
                                                 {(currentQuestion.type === "text" ||
@@ -304,14 +314,14 @@ export function FormPage() {
                                                     <Button
                                                         type="submit"
                                                         size="lg"
-                                                        className="flex-grow bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 shadow-lg hover:shadow-xl transition-all"
+                                                        className="flex-grow h-10 sm:h-11 bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 shadow-lg hover:shadow-xl transition-all text-sm sm:text-base"
                                                         disabled={
                                                             currentQuestion.type === "text"
                                                                 ? !inputValue.trim()
                                                                 : selectedChoices.length === 0
                                                         }>
                                                         Continuar
-                                                        <ArrowRight className="ml-2 h-5 w-5" />
+                                                        <ArrowRight className="ml-1 sm:ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                                                     </Button>
                                                 )}
                                             </div>
@@ -352,7 +362,7 @@ export function FormPage() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.3 }}
-                        className="text-center text-sm text-gray-500 mt-4">
+                        className="text-center text-xs sm:text-sm text-gray-500 mt-3 sm:mt-4">
                         {currentQuestion.type === "text" && "Pressiona Enter para continuar"}
                     </motion.p>
                 </div>
@@ -367,4 +377,3 @@ export function FormPage() {
         </div>
     );
 }
-

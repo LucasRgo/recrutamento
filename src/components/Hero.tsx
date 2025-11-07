@@ -4,6 +4,7 @@ import { Card } from "./ui/card";
 import { ArrowRight, TrendingUp } from "lucide-react";
 
 export function Hero() {
+    const assetBase = import.meta.env.BASE_URL;
     const navigate = useNavigate();
 
     const startForm = () => {
@@ -91,7 +92,7 @@ export function Hero() {
 
                             <Card className="relative h-full overflow-hidden shadow-2xl border-none">
                                 <img
-                                    src="/profissional_sério.jpg"
+                                    src={`${assetBase}profissional_sério.jpg`}
                                     alt="Profissional de sucesso"
                                     className="w-full h-full object-cover"
                                 />

@@ -1,10 +1,11 @@
 import { Separator } from "./ui/separator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { useState } from "react";
-import { Info, Mail, Phone, MapPin, Award } from "lucide-react";
+import { Info, Award } from "lucide-react";
 
 export function Footer() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const assetBase = import.meta.env.BASE_URL;
 
     return (
         <footer className="relative bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 border-t border-pink-500/20 rounded-t-3xl">
@@ -18,7 +19,7 @@ export function Footer() {
                     <div className="flex-shrink-0">
                         <div className="group">
                             <img
-                                src="/favicon_io/logo_squared.jpeg"
+                                src={`${assetBase}favicon_io/logo_squared.jpeg`}
                                 alt="DS INTERMEDIÁRIOS DE CRÉDITO"
                                 className="h-32 w-auto rounded-2xl shadow-2xl ring-4 ring-pink-500/30 group-hover:ring-pink-500/60 transition-all duration-500 group-hover:scale-105"
                             />

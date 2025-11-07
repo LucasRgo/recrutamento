@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 export function Navbar() {
     const location = useLocation();
     const isHomePage = location.pathname === "/";
+    const assetBase = import.meta.env.BASE_URL;
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
@@ -12,7 +13,7 @@ export function Navbar() {
                     {/* Logo */}
                     <div className="flex-shrink-0">
                         <img
-                            src="/favicon_io/logo.png"
+                            src={`${assetBase}favicon_io/logo.png`}
                             alt="DS INTERMEDIÁRIOS DE CRÉDITO"
                             className="h-12 w-auto"
                         />

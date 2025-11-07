@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "../components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
-import { AlertCircle, Heart, Home, RefreshCw } from "lucide-react";
+import { AlertCircle, Home, RefreshCw } from "lucide-react";
 import { useFormFlow } from "../hooks/useFormFlow";
 
 export function Disqualified() {

@@ -5,10 +5,11 @@ import { Button } from "../components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { CheckCircle2, Calendar, ArrowRight } from "lucide-react";
 import { useFormFlow } from "../hooks/useFormFlow";
+import { sendResponses } from "../utils/sendResponses";
 
 export function ThankYou() {
     const navigate = useNavigate();
-    const { status, reset } = useFormFlow();
+    const { status, reset, answers } = useFormFlow();
 
     useEffect(() => {
         // Redirect if not in completed state
@@ -16,6 +17,12 @@ export function ThankYou() {
             navigate("/");
         }
     }, [status, navigate]);
+
+    useEffect(() => {
+        if (status === "completed") {
+            void sendResponses(answers);
+        }
+    }, [status, answers]);
 
     const handleStartOver = () => {
         reset();
