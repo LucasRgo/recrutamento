@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "../components/ui/button";
@@ -19,6 +19,36 @@ export function FormPage() {
     const [direction, setDirection] = useState<"forward" | "backward">("forward");
     const inputRef = useRef<HTMLInputElement>(null);
     const [questionHistory, setQuestionHistory] = useState<string[]>([]);
+    const headerRef = useRef<HTMLDivElement>(null);
+    const [contentOffset, setContentOffset] = useState<number>(128);
+
+    useLayoutEffect(() => {
+        const calculateOffset = () => {
+            if (!headerRef.current) return;
+
+            const rect = headerRef.current.getBoundingClientRect();
+            const extraSpacing = 24; // space between header and content
+            setContentOffset(rect.height + rect.top + extraSpacing);
+        };
+
+        calculateOffset();
+
+        const observer =
+            typeof window !== "undefined" && "ResizeObserver" in window
+                ? new window.ResizeObserver(() => calculateOffset())
+                : null;
+
+        if (observer && headerRef.current) {
+            observer.observe(headerRef.current);
+        }
+
+        window.addEventListener("resize", calculateOffset);
+
+        return () => {
+            window.removeEventListener("resize", calculateOffset);
+            observer?.disconnect();
+        };
+    }, []);
 
     // Calculate progress
     const totalQuestions = questionnaire.questions.filter((q) => q.id !== "success").length;
@@ -164,6 +194,7 @@ export function FormPage() {
         <div className="min-h-screen flex flex-col bg-gradient-to-br from-pink-300 via-gray-200 to-blue-300">
             {/* Header with Progress */}
             <motion.div
+                ref={headerRef}
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 className="w-full bg-white/90 backdrop-blur-md border-b border-pink-100 sticky top-16 z-10 shadow-sm">
@@ -191,7 +222,9 @@ export function FormPage() {
             </motion.div>
 
             {/* Main Content */}
-            <div className="flex-grow flex items-start justify-center px-3 pt-20 pb-4">
+            <div
+                className="flex-grow flex items-start justify-center px-3 pb-4"
+                style={{ paddingTop: `${contentOffset}px` }}>
                 <div className="w-full max-w-2xl">
                     <AnimatePresence mode="wait" custom={direction}>
                         <motion.div
