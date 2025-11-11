@@ -90,6 +90,17 @@ export function FormPage() {
         }
     }, [currentQuestion, answers]);
 
+    // Scroll to top when question changes
+    useEffect(() => {
+        if (currentQuestion) {
+            // Scroll to top of the page smoothly
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        }
+    }, [currentQuestion?.id]);
+
     const handleSubmit = (e?: React.FormEvent) => {
         e?.preventDefault();
 
