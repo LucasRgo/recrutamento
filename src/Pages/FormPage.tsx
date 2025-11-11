@@ -24,11 +24,19 @@ export function FormPage() {
 
     useLayoutEffect(() => {
         const calculateOffset = () => {
-            if (!headerRef.current) return;
+            const headerElement = headerRef.current;
+            if (!headerElement) return;
 
-            const rect = headerRef.current.getBoundingClientRect();
+            const rect = headerElement.getBoundingClientRect();
             const extraSpacing = 24; // space between header and content
-            setContentOffset(rect.height + rect.top + extraSpacing);
+
+            const computedTop = typeof window !== "undefined"
+                ? window.getComputedStyle(headerElement).top
+                : "0";
+            const parsedTop = Number.parseFloat(computedTop);
+            const stickyOffset = Number.isFinite(parsedTop) ? parsedTop  : 0;
+
+            setContentOffset(rect.height + stickyOffset + extraSpacing);
         };
 
         calculateOffset();
