@@ -12,7 +12,6 @@ export function ThankYou() {
     const { status, reset, answers } = useFormFlow();
 
     useEffect(() => {
-        // Redirect if not in completed state
         if (status !== "completed") {
             navigate("/");
         }
@@ -23,6 +22,41 @@ export function ThankYou() {
             void sendResponses(answers);
         }
     }, [status, answers]);
+
+    useEffect(() => {
+        // Load Calendly CSS
+        const link = document.createElement("link");
+        link.href = "https://assets.calendly.com/assets/external/widget.css";
+        link.rel = "stylesheet";
+        document.head.appendChild(link);
+
+        // Load Calendly script
+        const script = document.createElement("script");
+        script.src = "https://assets.calendly.com/assets/external/widget.js";
+        script.type = "text/javascript";
+        script.async = true;
+
+        document.body.appendChild(script);
+
+        return () => {
+            // Cleanup on unmount
+            if (link.parentNode) {
+                link.parentNode.removeChild(link);
+            }
+            if (script.parentNode) {
+                script.parentNode.removeChild(script);
+            }
+        };
+    }, []);
+
+    const openCalendly = () => {
+        if (window.Calendly) {
+            window.Calendly.initPopupWidget({
+                url: "https://calendly.com/catarinasantosdsicredito/30min",
+            });
+        }
+        return false;
+    };
 
     const handleStartOver = () => {
         reset();
@@ -81,8 +115,26 @@ export function ThankYou() {
                                 </h3>
                                 <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
                                     Agenda agora uma reunião rápida (20 minutos) para conheceres todos os detalhes
-                                    da oportunidade
+                                    da oportunidade.
                                 </p>
+                                <motion.div
+                                    animate={{
+                                        scale: [1, 1.03, 1],
+                                    }}
+                                    transition={{
+                                        duration: 2,
+                                        repeat: Infinity,
+                                        repeatType: "reverse",
+                                        ease: "easeInOut",
+                                    }}>
+                                    <Button
+                                        onClick={openCalendly}
+                                        size="lg"
+                                        className="w-full mt-2 sm:mt-3 p-2.5 sm:p-3 h-12 sm:h-14 text-sm sm:text-base bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 shadow-lg hover:shadow-xl transition-all font-semibold">
+                                        <Calendar className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                                        Marcar Reunião
+                                    </Button>
+                                </motion.div>
                             </motion.div>
 
                             <motion.div
@@ -99,8 +151,9 @@ export function ThankYou() {
                                 </Button>
                                 <Button
                                     onClick={handleStartOver}
+                                    variant="outline"
                                     size="lg"
-                                    className="flex-1 p-2.5 sm:p-3 h-12 sm:h-14 text-sm sm:text-base bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 shadow-lg hover:shadow-xl transition-all">
+                                    className="flex-1 p-2.5 sm:p-3 h-12 sm:h-14 text-sm sm:text-base bg-gray-100 border-gray-400 text-gray-800 hover:bg-gray-200 hover:text-gray-950 transition-all">
                                     Submeter Outra Candidatura
                                     <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                                 </Button>
