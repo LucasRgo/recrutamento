@@ -5,7 +5,7 @@ import { defineConfig } from "vite";
 // https://vite.dev/config/
 export default defineConfig({
     plugins: [react()],
-    base: "/recrutamento/",
+    base: "/",
     resolve: {
         alias: {
             "@": path.resolve(__dirname, "./src"),
@@ -14,6 +14,7 @@ export default defineConfig({
     server: {
         allowedHosts: [
             "beloved-barnacle-smart.ngrok-free.app",
+            "creditotalento.pt"
         ],
     },
 });
